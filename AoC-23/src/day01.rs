@@ -1,4 +1,7 @@
 use std::collections::LinkedList;
+
+use crate::utils::read_input;
+
 pub fn second_star() {
     let input = read_input(1);
     // let input = String::from(
@@ -83,13 +86,4 @@ pub fn first_star() {
         sum += 10 * nums.first().unwrap() + nums.last().unwrap();
     }
     println!("{}", sum);
-}
-
-fn read_input(day: usize) -> String {
-    std::fs::read_to_string(format!(
-        "{}\\data\\day{:0>2}.txt",
-        std::env::current_dir().unwrap().display(),
-        day
-    ))
-    .unwrap()
 }

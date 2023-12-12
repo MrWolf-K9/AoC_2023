@@ -1,4 +1,5 @@
-mod day01;
+pub mod day01;
+pub mod utils;
 
 fn main() {
     day01::first_star();
