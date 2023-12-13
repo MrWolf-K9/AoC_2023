@@ -1,9 +1,37 @@
+use std::io::BufRead;
+
 use crate::puzzle::Puzzle;
 
 pub struct Day02;
-impl Day02 {}
+struct Taken {
+    r: u8,
+    g: u8,
+    b: u8,
+}
+impl Day02 {
+    fn parse_game(line: String) -> Vec<Taken> {
+        println!("{}", line);
+        let start_index = line.find(':').unwrap() + 2;
+        let stripped = &line[start_index..];
+        let takes: Vec<&str> = stripped.split(';').collect();
+        println!("{:?}", takes);
+        let takens: Vec<Taken> = takes
+            .iter()
+            .map(|take| Self::parse_take(take.to_string()))
+            .collect();
+        return takens;
+    }
+    fn parse_take(take: String) -> Taken {
+        let trimmed = take.trim();
+        println!("{}", trimmed);
+        Taken { r: 0, g: 0, b: 0 }
+    }
+}
 impl Puzzle for Day02 {
     fn first_star(data: String) -> String {
+        for line in data.lines() {
+            Self::parse_game(line.to_string());
+        }
         String::from("Not implemented")
     }
 
