@@ -7,10 +7,12 @@ use day01::Day01;
 use day02::Day02;
 use puzzle::Puzzle;
 
-fn main() {
-    println!("{}", Day01::first_star());
-    println!("{}", Day01::second_star());
+use crate::utils::read_input;
 
-    println!("{}", Day02::first_star());
-    println!("{}", Day02::second_star());
+fn main() {
+    println!("{}", Day01::first_star(read_input(1)));
+    println!("{}", Day01::second_star(read_input(1)));
+
+    println!("{}", Day02::first_star(read_input(2)));
+    println!("{}", Day02::second_star(read_input(2)));
 }

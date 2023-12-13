@@ -1,6 +1,6 @@
 use std::collections::LinkedList;
 
-use crate::{puzzle::Puzzle, utils::read_input};
+use crate::puzzle::Puzzle;
 pub struct Day01;
 impl Day01 {
     fn remove_first_character(s: &mut String) {
@@ -13,9 +13,9 @@ impl Day01 {
 
     fn get_nums(line: &str) -> LinkedList<u32> {
         let line_copy = String::from(line);
-        // println!("{}", line_copy);
         let mut unprocessed = line_copy.clone();
         let mut res: LinkedList<u32> = LinkedList::new();
+
         while !unprocessed.is_empty() {
             let char = unprocessed.chars().next().unwrap();
             if char.is_digit(10) {
@@ -52,34 +52,22 @@ impl Day01 {
                 Self::remove_first_character(&mut unprocessed);
             }
         }
-        // println!("{:?}", res);
         res
     }
 }
 
 impl Puzzle for Day01 {
-    fn second_star() -> String {
-        let input = read_input(1);
-        // let input = String::from(
-        //     "two1nine
-        //     eightwothree
-        //     abcone2threexyz
-        //     xtwone3four
-        //     4nineeightseven2
-        //     zoneight234
-        //     7pqrstsixteen",
-        // );
+    fn second_star(data: String) -> String {
         let mut sum = 0;
-        for line in input.lines() {
+        for line in data.lines() {
             let nums = Self::get_nums(line);
             sum += 10 * nums.front().unwrap() + nums.back().unwrap();
         }
         sum.to_string()
     }
-    fn first_star() -> String {
-        let input = read_input(1);
+    fn first_star(data: String) -> String {
         let mut sum = 0;
-        for line in input.lines() {
+        for line in data.lines() {
             let nums = line
                 .chars()
                 .map(|c| if c.is_digit(10) { c.to_digit(10) } else { None })
