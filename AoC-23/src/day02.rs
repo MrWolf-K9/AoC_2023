@@ -3,7 +3,7 @@ use core::panic;
 use crate::puzzle::Puzzle;
 
 pub struct Day02;
-struct Taken(u8, u8, u8);
+struct Taken(u64, u64, u64);
 enum Colors {
     R,
     G,
@@ -41,7 +41,7 @@ impl Day02 {
                 Colors::B => b = b + c.count,
             }
         }
-        Taken(r, g, b)
+        Taken(r.into(), g.into(), b.into())
     }
 
     fn parse_color(color: String) -> Color {
@@ -70,7 +70,7 @@ impl Day02 {
         const B_MAX: u8 = 14;
 
         for t in taken {
-            if t.0 > R_MAX || t.1 > G_MAX || t.2 > B_MAX {
+            if t.0 > R_MAX.into() || t.1 > G_MAX.into() || t.2 > B_MAX.into() {
                 return false;
             }
         }
@@ -91,7 +91,22 @@ impl Puzzle for Day02 {
     }
 
     fn second_star(data: String) -> String {
-        String::from("Not implemented")
+        let lines: Vec<String> = data.lines().map(|l| l.to_string()).collect::<Vec<String>>();
+        let games = lines.iter().map(|l| Self::parse_game(l.to_string()));
+        let mut result = 0;
+        for g in games {
+            let max_taken: Taken = g.iter().fold(Taken(0, 0, 0), |acc, e| {
+                Taken(
+                    if e.0 > acc.0 { e.0 } else { acc.0 },
+                    if e.1 > acc.1 { e.1 } else { acc.1 },
+                    if e.2 > acc.2 { e.2 } else { acc.2 },
+                )
+            });
+            //println!("{} {} {}", max_taken.0, max_taken.1, max_taken.2);
+            result = result + (max_taken.0 * max_taken.1 * max_taken.2);
+        }
+
+        result.to_string()
     }
 }
 
@@ -107,5 +122,16 @@ mod tests {
             Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green";
         let result = Day02::first_star(test_data.to_string());
         assert_eq!(result, "8".to_string());
+    }
+
+    #[test]
+    fn second_task() {
+        let test_data = "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
+            Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
+            Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
+            Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
+            Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green";
+        let result = Day02::second_star(test_data.to_string());
+        assert_eq!(result, "2286".to_string());
     }
 }
