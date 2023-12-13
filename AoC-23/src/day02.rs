@@ -11,7 +11,7 @@ enum Colors {
 }
 struct Color {
     color: Colors,
-    amounght: u8,
+    count: u8,
 }
 impl Day02 {
     fn parse_game(line: String) -> Vec<Taken> {
@@ -36,9 +36,9 @@ impl Day02 {
         let mut b = 0;
         for c in colors {
             match c.color {
-                Colors::R => r = r + c.amounght,
-                Colors::G => g = g + c.amounght,
-                Colors::B => b = b + c.amounght,
+                Colors::R => r = r + c.count,
+                Colors::G => g = g + c.count,
+                Colors::B => b = b + c.count,
             }
         }
         Taken(r, g, b)
@@ -50,15 +50,15 @@ impl Day02 {
         match splitted[1] {
             "red" => Color {
                 color: Colors::R,
-                amounght: splitted[0].parse::<u8>().unwrap(),
+                count: splitted[0].parse::<u8>().unwrap(),
             },
             "blue" => Color {
                 color: Colors::B,
-                amounght: splitted[0].parse::<u8>().unwrap(),
+                count: splitted[0].parse::<u8>().unwrap(),
             },
             "green" => Color {
                 color: Colors::G,
-                amounght: splitted[0].parse::<u8>().unwrap(),
+                count: splitted[0].parse::<u8>().unwrap(),
             },
             _ => panic!(),
         }
