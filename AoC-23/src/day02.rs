@@ -11,3 +11,13 @@ impl Puzzle for Day02 {
         String::from("Not implemented")
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn it_works() {
+        let result = Day02::first_star();
+        assert_eq!(result, "Not implemented".to_string());
+    }
+}
